@@ -51,7 +51,7 @@ th {
                 <h1>Presensi</h1>
                 <!-- Tampilan Kalender -->
 				
-                <div id="calendar"></div>
+                
                 <div id="jam"></div>
                 <br>
 
@@ -61,9 +61,11 @@ th {
                     <button type="submit" class="btn btn-primary">Absen Sekarang</button>
                     <a class="btn btn-danger" href="<?php echo base_url('pegawai/dashboard') ?>">
                         <i class="fas fa-fw fa-tachometer-alt"></i>
-                        <span>Censel</span>
+                        <span>Cancel</span>
                     </a>
                 </form>
+                <br>
+                <div id="calendar"></div>
             </center>
         </div>
     </div>
