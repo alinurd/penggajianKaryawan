@@ -52,6 +52,9 @@
                             }elseif($item->jenis==2){
                                 $jenis="Tambahan";
                                 $hd="hide";
+                            }elseif($item->jenis=="telat"){
+                                $jenis="Tambahan";
+                                $hd="hide";
                             }else{
                                 $jenis=$item->jenis;
                                 $hd="";
