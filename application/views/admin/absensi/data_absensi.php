@@ -90,7 +90,7 @@
 					<tr>
 						<td class="text-center"><?php echo $no++?></td>
 						<td class="text-center"><?php echo $a->nik?></td>
-						<td class="text-center"><?php echo $a->nama_pegawai?></td>
+						<td class="text-center"><a href="<?php echo base_url('admin/data_absensi/detailAbsen/'. $a->nik.'/1') ?>"><?php echo $a->nama_pegawai?></a></td>
 						<td class="text-center"><?php echo $a->jenis_kelamin?></td>
 						<td class="text-center"><?php echo $a->nama_jabatan?></td>
 						<td class="text-center"><?php echo $a->hadir?></td>
