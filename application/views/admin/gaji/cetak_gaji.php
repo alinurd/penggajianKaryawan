@@ -98,7 +98,7 @@ foreach ($cetak_gaji as $g) :
 						<td class="text-center"><i><?=$g->alpha?>x</i> <br>Rp. <?php echo number_format($total_potongan ,0, ',','.') ?></td>
 						<td class="text-center"><i><?=$g->telat?> Jam</i> <br>Rp. <?php echo number_format($total_potonganTelat ,0, ',','.') ?></td>
 						<td class="text-center"><i><?=$g->lembur?> jam</i> <br>Rp. <?php echo number_format($total_tambahan ,0, ',','.') ?></td>
-						<td class="text-center">Rp. <?php echo number_format($g->gaji_pokok + $g->tj_transport + $g->uang_makan - $total_potongan + $total_tambahan-$total_potonganTelat ,0,',','.') ?></td>
+						<td class="text-center">Rp. <?php echo number_format($g->gaji_pokok + $g->tj_transport + $g->uang_makan - $total_potongan + $total_tambahan+$total_potonganTelat ,0,',','.') ?></td>
 					</tr> 
     <?php endif; ?>
 <?php endforeach; ?>

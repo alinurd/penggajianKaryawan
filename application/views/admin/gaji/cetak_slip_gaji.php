@@ -23,8 +23,10 @@
 
 	<?php foreach($print_slip as $ps) : ?>
 
-	<?php $potongan_gaji=$ps->alpha * $potongan;
+	<?php 
+	$potongan_gaji=$ps->alpha * $potongan;
 	$total_tambahan = $ps->lembur * $paramLembur->jml_potongan;
+	$potonagn_telat = $ps->telat * $paramTelat->jml_potongan;
 
 ?>
 
@@ -81,9 +83,13 @@
 		</tr>
 
 		<tr>
-			<td>4</td>
-			<td>Potongan [<?=$ps->alpha?>x]</td>
+			<td class="text-center" rowspan="2">4</td>
+			<td>Potongan Alpha [<?=$ps->alpha?>x]</td>
 			<td>Rp. <?php echo number_format($potongan_gaji,0,',','.') ?></td>
+		</tr>
+		<tr>
+ 			<td>Potongan Telat [<?= $ps->telat ?> jam]</td>
+			<td>Rp. <?php echo number_format($potonagn_telat,0,',','.') ?></td>
 		</tr>
 		<tr>
 			<td>5</td>
@@ -93,7 +99,7 @@
 
 		<tr>
 			<th colspan="2" style="text-align: right;">Total Gaji : </th>
-			<th>Rp. <?php echo number_format($ps->gaji_pokok+$ps->tj_transport+$ps->uang_makan-$potongan_gaji+$total_tambahan,0,',','.') ?></th>
+			<th>Rp. <?php echo number_format($ps->gaji_pokok+$ps->tj_transport+$ps->uang_makan-$potongan_gaji+$total_tambahan+$potonagn_telat,0,',','.') ?></th>
 		</tr>
 	</table>
 
