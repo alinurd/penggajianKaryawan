@@ -127,6 +127,6 @@
 </body>
 </html>
 
-<!-- <script type="text/javascript">
+<script type="text/javascript">
 	window.print();
-</script> -->
+</script>
