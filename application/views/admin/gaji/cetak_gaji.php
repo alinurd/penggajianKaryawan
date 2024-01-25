@@ -41,19 +41,23 @@
 		</tr>
 	</table>
 	<table class="table table-bordered table-triped">
-		<tr>
-			<th class="text-center">No</th>
-			<th class="text-center">NIK</th>
-			<th class="text-center">Nama Pegawai</th>
-			<th class="text-center">Jenis Kelamin</th>
-			<th class="text-center">Jabatan</th>
-			<th class="text-center">GajI Pokok</th>
-			<th class="text-center">Tj. Transport</th>
-			<th class="text-center">Uang Makan</th>
-			<th class="text-center">Potongan [<i>Alpha</i>]</th>
-			<th class="text-center">Tambahan [<i>Lembur</i>]</th>
-			<th class="text-center">Total Gaji</th>
-		</tr>
+	<tr>
+				        <th class="text-center" rowspan="2">No</th>
+						<th class="text-center" rowspan="2">NIK</th>
+						<th class="text-center" rowspan="2">Nama Pegawai</th>
+						<!-- <th class="text-center" rowspan="2">Jenis Kelamin</th> -->
+						<th class="text-center" rowspan="2">Jabatan</th>
+						<th class="text-center" rowspan="2">GajI Pokok</th>
+						<th class="text-center" rowspan="2">Tj. Transport</th>
+						<th class="text-center" rowspan="2">Uang Makan</th>
+						<th class="text-center" colspan="2">Potongan</th>
+						<th class="text-center" rowspan="2">Tambahan [<i>Lembur</i>]</th>
+						<th class="text-center" rowspan="2">Total Gaji</th>
+		           </tr>
+		           <tr> 
+						<th class="text-center" >[<i>Alpha</i>]</th>
+						<th class="text-center" >[<i>Telat</i>]</th> 
+		           </tr>
 		<?php 
 $no = 1;
 $uniqueNiks = []; // To track unique "nik" values
@@ -67,7 +71,10 @@ foreach ($cetak_gaji as $g) :
     if (!in_array($g->nik, $uniqueNiks)):
         $total_potongan = 0;
         $total_tambahan = 0;
-        
+		$total_potonganTelat=0;
+		if($g->telat){
+			$total_potonganTelat  = $g->telat * $paramTelat->jml_potongan;
+		}
         if ($g->alpha > 0) {
             $total_potongan = $g->alpha * $alpha;
         }
@@ -79,19 +86,20 @@ foreach ($cetak_gaji as $g) :
         $uniqueNiks[] = $g->nik; // Mark "nik" as displayed
         
         ?>
-        <tr>
-            <td class="text-center"><?php echo $no++ ?></td>
-            <td class="text-center"><?php echo $g->nik ?></td>
-            <td class="text-center"><?php echo $g->nama_pegawai ?></td>
-            <td class="text-center"><?php echo $g->jenis_kelamin ?></td>
-            <td class="text-center"><?php echo $g->nama_jabatan ?></td>
-            <td class="text-center">Rp. <?php echo number_format($g->gaji_pokok, 0, ',', '.') ?></td>
-            <td class="text-center">Rp. <?php echo number_format($g->tj_transport, 0, ',', '.') ?></td>
-            <td class="text-center">Rp. <?php echo number_format($g->uang_makan, 0, ',', '.') ?></td>
-            <td class="text-center"><i><?=$g->alpha?>x</i> <br>Rp. <?php echo number_format($total_potongan ,0, ',','.') ?></td>
-            <td class="text-center"><i><?= $g->lembur ?> jam</i> <br>Rp. <?php echo number_format($total_tambahan, 0, ',', '.') ?></td>
-            <td class="text-center">Rp. <?php echo number_format($g->gaji_pokok + $g->tj_transport + $g->uang_makan - $total_potongan + $total_tambahan, 0, ',', '.') ?></td>
-        </tr>
+       <tr>
+						<td class="text-center"><?php echo $no++ ?></td>
+						<td class="text-center"><?php echo $g->nik ?></td>
+						<td class="text-center"><?php echo $g->nama_pegawai ?></td>
+						<!-- <td class="text-center"><?php echo $g->jenis_kelamin ?></td> -->
+						<td class="text-center"><?php echo $g->nama_jabatan ?></td>
+						<td class="text-center">Rp. <?php echo number_format($g->gaji_pokok,0,',','.') ?></td>
+						<td class="text-center">Rp. <?php echo number_format($g->tj_transport,0,',','.') ?></td>
+						<td class="text-center">Rp. <?php echo number_format($g->uang_makan,0,',','.') ?></td>
+						<td class="text-center"><i><?=$g->alpha?>x</i> <br>Rp. <?php echo number_format($total_potongan ,0, ',','.') ?></td>
+						<td class="text-center"><i><?=$g->telat?> Jam</i> <br>Rp. <?php echo number_format($total_potonganTelat ,0, ',','.') ?></td>
+						<td class="text-center"><i><?=$g->lembur?> jam</i> <br>Rp. <?php echo number_format($total_tambahan ,0, ',','.') ?></td>
+						<td class="text-center">Rp. <?php echo number_format($g->gaji_pokok + $g->tj_transport + $g->uang_makan - $total_potongan + $total_tambahan-$total_potonganTelat ,0,',','.') ?></td>
+					</tr> 
     <?php endif; ?>
 <?php endforeach; ?>
 <?php endforeach; ?>
