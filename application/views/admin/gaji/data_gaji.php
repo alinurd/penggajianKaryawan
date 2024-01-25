@@ -92,17 +92,21 @@
 		       <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 		         <thead class="thead-dark">
 		           <tr>
-				        <th class="text-center">No</th>
-						<th class="text-center">NIK</th>
-						<th class="text-center">Nama Pegawai</th>
-						<!-- <th class="text-center">Jenis Kelamin</th> -->
-						<th class="text-center">Jabatan</th>
-						<th class="text-center">GajI Pokok</th>
-						<th class="text-center">Tj. Transport</th>
-						<th class="text-center">Uang Makan</th>
-						<th class="text-center">Potongan [<i>Alpha</i>]</th>
-						<th class="text-center">Tambahan [<i>Lembur</i>]</th>
-						<th class="text-center">Total Gaji</th>
+				        <th class="text-center" rowspan="2">No</th>
+						<th class="text-center" rowspan="2">NIK</th>
+						<th class="text-center" rowspan="2">Nama Pegawai</th>
+						<!-- <th class="text-center" rowspan="2">Jenis Kelamin</th> -->
+						<th class="text-center" rowspan="2">Jabatan</th>
+						<th class="text-center" rowspan="2">GajI Pokok</th>
+						<th class="text-center" rowspan="2">Tj. Transport</th>
+						<th class="text-center" rowspan="2">Uang Makan</th>
+						<th class="text-center" colspan="2">Potongan</th>
+						<th class="text-center" rowspan="2">Tambahan [<i>Lembur</i>]</th>
+						<th class="text-center" rowspan="2">Total Gaji</th>
+		           </tr>
+		           <tr> 
+						<th class="text-center" >[<i>Alpha</i>]</th>
+						<th class="text-center" >[<i>Telat</i>]</th> 
 		           </tr>
 		         </thead>
 		         <tbody>
@@ -110,7 +114,12 @@
 					<?php 
 					$no=1; foreach($gaji as $g) :
 					$total_potongan=0;
+					$total_potonganTelat=0;
 					$total_tambahan=0;
+						if($g->telat){
+							$total_potonganTelat  = $g->telat * $paramTelat->jml_potongan;
+						}
+
 						if($g->alpha>0){
 							$total_potongan  = $g->alpha * $potongan->jml_potongan;
 						}
@@ -128,8 +137,9 @@
 						<td class="text-center">Rp. <?php echo number_format($g->tj_transport,0,',','.') ?></td>
 						<td class="text-center">Rp. <?php echo number_format($g->uang_makan,0,',','.') ?></td>
 						<td class="text-center"><i><?=$g->alpha?>x</i> <br>Rp. <?php echo number_format($total_potongan ,0, ',','.') ?></td>
+						<td class="text-center"><i><?=$g->telat?> Jam</i> <br>Rp. <?php echo number_format($total_potonganTelat ,0, ',','.') ?></td>
 						<td class="text-center"><i><?=$g->lembur?> jam</i> <br>Rp. <?php echo number_format($total_tambahan ,0, ',','.') ?></td>
-						<td class="text-center">Rp. <?php echo number_format($g->gaji_pokok + $g->tj_transport + $g->uang_makan - $total_potongan + $total_tambahan ,0,',','.') ?></td>
+						<td class="text-center">Rp. <?php echo number_format($g->gaji_pokok + $g->tj_transport + $g->uang_makan - $total_potongan + $total_tambahan-$total_potonganTelat ,0,',','.') ?></td>
 					</tr> 
  					<?php endforeach ;?>
 		         </tbody>

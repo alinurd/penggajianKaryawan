@@ -27,6 +27,17 @@ class ModelPenggajian extends CI_model{
 			return FALSE;
 		}
 	}
+	public function get_data_telat() {
+
+		$result = $this->db->where('jenis', "telat")
+ 			->limit(1)
+			->get('parameter_gaji');
+		if ($result->num_rows() > 0) {
+			return $result->row();
+		} else {
+			return FALSE;
+		}
+	}
 
 	public function insert_data($data,$table){
 		$this->db->insert($table, $data);

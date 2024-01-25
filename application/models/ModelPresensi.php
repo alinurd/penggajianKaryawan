@@ -32,7 +32,7 @@ class ModelPresensi extends CI_model
 
 		// return $this->db->insert($table, $data);
 	}
-	public function updateRekapAbsen($nik)
+	public function updateRekapAbsen($nik, $roundedHours)
 	{
 
 		$date = date("mY");
@@ -41,6 +41,7 @@ class ModelPresensi extends CI_model
 			// If a record exists, update total_absen by incrementing it
 			$this->db->where(array('nik' => $nik, 'bulan' => $date));
 			$this->db->set('hadir', 'hadir + 1', FALSE);
+			$this->db->set('telat', 'telat +'.$roundedHours, FALSE);
 			$this->db->update('data_kehadiran');
 		} else {
 			$nama_pegawai = $this->session->userdata('nama_pegawai');
@@ -53,7 +54,8 @@ class ModelPresensi extends CI_model
 				array(
 					'nik' => $nik,
 					'bulan' => $date,
-					'hadir' => 0,
+					'hadir' => 1,
+					'telat' => $roundedHours,
 					'jenis_kelamin' => $jenis_kelamin,
 					'nama_pegawai' => $nama_pegawai,
 					'nama_jabatan' => $nama_jabatan

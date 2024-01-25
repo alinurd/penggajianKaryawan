@@ -108,7 +108,7 @@ $roundedHours = round($diffInHours);
 			);
 	
 			$res = $this->ModelPresensi->insert_data($data, "presensi");
-			 $this->ModelPresensi->updateRekapAbsen($nik);
+			 $this->ModelPresensi->updateRekapAbsen($nik, $roundedHours);
   		}
 
 
