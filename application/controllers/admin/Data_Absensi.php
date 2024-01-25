@@ -110,6 +110,7 @@ class Data_Absensi extends CI_Controller
  	// $month = 8;
 $timezone = new DateTimeZone('Asia/Jakarta');
 $currentDateTime = new DateTime('now', $timezone);
+$firstDayOfMonth = $currentDateTime->format('Y-m-01');
 
 // Set the month to the specified value
 $currentDateTime->setDate($currentDateTime->format('Y'), $month, 1);

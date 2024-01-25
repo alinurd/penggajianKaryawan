@@ -33,6 +33,8 @@ class Presensi extends CI_Controller
 	}
 	public function save()
 	{
+		date_default_timezone_set('Asia/Jakarta');
+
 		$id_pegawai = $this->session->userdata('id_pegawai');
 		$nik = $this->session->userdata('nik');
 
@@ -56,6 +58,7 @@ class Presensi extends CI_Controller
 		} else {
 			echo 'Failed to upload the image.';
 		}
+		$date = date("H:i");
 
 		if($getPresensi->status_absen==1){
 			
@@ -74,22 +77,41 @@ class Presensi extends CI_Controller
 
 		}else{
 			$status_absen = 1; // 1=> masuk | 2=> pulang
+		
+
+			// Waktu sekarang
+$currentTime = date("H:i");
+
+// Waktu tujuan
+$destinationTime = "08:20";
+
+// Konversi waktu menjadi format yang dapat dihitung
+$currentTimestamp = strtotime($currentTime);
+$destinationTimestamp = strtotime($destinationTime);
+
+// Hitung selisih dalam satuan detik
+$diffInSeconds = $destinationTimestamp - $currentTimestamp;
+
+// Konversi selisih ke jam
+$diffInHours = $diffInSeconds / 3600;  
+$roundedHours = round($diffInHours);
+
+
 			$data = array(
+				'tanggal' => date("Y-m-d"),
+				'waktu' => date("H:i:s"),
 				'id_pegawai' => $id_pegawai,
 				'status_absen' => $status_absen,
 				'image' => $filename,
 				'nik' => $nik,
+				'telat' => $roundedHours,
 			);
 	
 			$res = $this->ModelPresensi->insert_data($data, "presensi");
 			 $this->ModelPresensi->updateRekapAbsen($nik);
   		}
 
-		
 
-
-
-		// Respond with JSON
 		header('Content-Type: application/json');
 		echo json_encode(array('success' => true));
 	}
