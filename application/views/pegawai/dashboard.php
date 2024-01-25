@@ -42,8 +42,7 @@ $lemburTxt="Lembur?";
 		$ptw="-";
 	$lembur="disabled";
 	$absenDis="";
-	$lembur="hide";
-	$sts="Belum Absen";
+ 	$sts="Belum Absen";
 	$absesnTxt="Absen sekarang";
 }
 
