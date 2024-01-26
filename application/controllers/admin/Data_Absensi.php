@@ -114,13 +114,13 @@ $firstDayOfMonth = $currentDateTime->format('Y-m-01');
 
 // Set the month to the specified value
 $currentDateTime->setDate($currentDateTime->format('Y'), $month, 1);
-
- $firstDayOfMonth = $currentDateTime->format('Y-m-01');
+$firstDayOfMonth = $currentDateTime->format('Y-m-01');
 
 // Get the last day of the specified month
 $lastDayOfMonth = $currentDateTime->format('Y-m-t');
 
 // Create an array of all dates in the specified month
+// var_dump($firstDayOfMonth);
 $allDatesInMonth = [];
 $currentDate = new DateTime($firstDayOfMonth);
 while ($currentDate <= new DateTime($lastDayOfMonth)) {
@@ -129,6 +129,7 @@ while ($currentDate <= new DateTime($lastDayOfMonth)) {
 }
 
 $data['tanggal'] = $allDatesInMonth;
+$data['countTanggal'] = count($allDatesInMonth);
 
 	
  	
