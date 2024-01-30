@@ -136,5 +136,5 @@ $transport = $g->tj_transport * ($persentase_kehadiran / 100);
 </html>
 
 <script type="text/javascript">
-	// window.print();
+	window.print();
 </script>
