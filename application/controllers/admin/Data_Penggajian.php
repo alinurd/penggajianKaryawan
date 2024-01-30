@@ -85,6 +85,32 @@ $data['countTanggal'] = count($allDatesInMonth);
 			$bulantahun = $bulan.$tahun;
 		}
 		
+		
+$timezone = new DateTimeZone('Asia/Jakarta');
+$currentDateTime = new DateTime('now', $timezone);
+$firstDayOfMonth = $currentDateTime->format('Y-m-01');
+
+// Set the month to the specified value
+$currentDateTime->setDate($currentDateTime->format($tahun), $bulan, 1);
+$firstDayOfMonth = $currentDateTime->format('Y-m-01');
+
+// Get the last day of the specified month
+$lastDayOfMonth = $currentDateTime->format('Y-m-t');
+
+// Create an array of all dates in the specified month
+// var_dump($firstDayOfMonth);
+$allDatesInMonth = [];
+$currentDate = new DateTime($firstDayOfMonth);
+while ($currentDate <= new DateTime($lastDayOfMonth)) {
+    $allDatesInMonth[] = $currentDate->format('Y-m-d');
+    $currentDate->modify('+1 day');
+}
+
+$data['tanggal'] = $allDatesInMonth;
+$data['countTanggal'] = count($allDatesInMonth);
+
+
+		
 		$data['ptn'] = $this->ModelPenggajian->get_data_alpha();
 		$data['paramLembur'] = $this->ModelPenggajian->get_data_lembur();
 		$data['paramTelat'] = $this->ModelPenggajian->get_data_telat();
