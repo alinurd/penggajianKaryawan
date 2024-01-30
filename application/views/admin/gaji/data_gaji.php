@@ -127,7 +127,7 @@
 						}
 						if($g->lembur>0){
 							$total_tambahan  = $g->lembur * $paramLembur->jml_potongan;
-						}
+						 }
 						
 $jumlah_kehadiran = $g->hadir;
 
