@@ -1,195 +1,197 @@
 <div class="container-fluid">
-  <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800"><?php echo $title?></h1>
-  </div>
-
-  <div class="card mb-3">
-  <div class="card-header bg-primary text-white">
-    Filter Data Gaji Pegawai
-  </div>
-  <div class="card-body">
-    <form class="form-inline">
-	  <div class="form-group mb-2">
-	    <label for="staticEmail2">Bulan</label>
-	    <select class="form-control ml-3" name="bulan">
-		    <option value=""> Pilih Bulan </option>
-		    <option value="01">Januari</option>
-		    <option value="02">Februari</option>
-		    <option value="03">Maret</option>
-		    <option value="04">April</option>
-		    <option value="05">Mei</option>
-		    <option value="06">Juni</option>
-		    <option value="07">Juli</option>
-		    <option value="08">Agustus</option>
-		    <option value="09">September</option>
-		    <option value="10">Oktober</option>
-		    <option value="11">November</option>
-		    <option value="12">Desember</option>
-	    </select>
-	  </div>
-	  <div class="form-group mb-2 ml-5">
-	    <label for="staticEmail2">Tahun</label>
-	    <select class="form-control ml-3" name="tahun">
-		    <option value=""> Pilih Tahun </option>
-		    <?php $tahun = date('Y');
-		    for($i=2020;$i<$tahun+5;$i++) { ?>
-		    <option value="<?php echo $i ?>"><?php echo $i ?></option>
-		<?php }?>
-		</select>
-	  </div>
-
-	  <?php
-		  if((isset($_GET['bulan']) && $_GET['bulan']!='') && (isset($_GET['tahun']) && $_GET['tahun']!='')){
-				$bulan = $_GET['bulan'];
-				$tahun = $_GET['tahun'];
-				$bulantahun = $bulan.$tahun;
-			}else{
-				$bulan = date('m');
-				$tahun = date('Y');
-				$bulantahun = $bulan.$tahun;
-			}
-	  ?>
-
-	  <button type="submit" class="btn btn-primary mb-2 ml-auto"><i class="fas fa-eye"></i> Tampilkan Data</button>
-
-	  <?php if(count($gaji) > 0 ) { ?>
-	  	<a href="<?php echo base_url('admin/data_penggajian/cetak_gaji?bulan='.$bulan),'&tahun='.$tahun?>" class="btn btn-success mb-2 ml-3"><i class="fas fa-print"></i> Cetak Daftar Gaji</a>
-	  <?php }else{ ?>
-	  	<button type="button" class="btn btn-success mb-2 ml-3" data-toggle="modal" data-target="#exampleModal">
-	  	<i class="fas fa-print"></i> Cetak Daftar Gaji</button>
-	<?php } ?>
-
-	</form>
-  </div>
-</div>
-</div>
-	
-	<?php
-		if((isset($_GET['bulan']) && $_GET['bulan']!='') && (isset($_GET['tahun']) && $_GET['tahun']!='')){
-			$bulan = $_GET['bulan'];
-			$tahun = $_GET['tahun'];
-			$bulantahun = $bulan.$tahun;
-		}else{
-			$bulan = date('m');
-			$tahun = date('Y');
-			$bulantahun = $bulan.$tahun;
-		}
-	?>
-
-	<div class="alert alert-info">
-		Menampilkan Data Gaji Pegawai Bulan: <span class="font-weight-bold"><?php echo $bulan ?></span> Tahun: <span class="font-weight-bold"><?php echo $tahun ?></span>
+	<div class="d-sm-flex align-items-center justify-content-between mb-4">
+		<h1 class="h3 mb-0 text-gray-800"><?php echo $title ?></h1>
 	</div>
 
-	<?php
+	<div class="card mb-3">
+		<div class="card-header bg-primary text-white">
+			Filter Data Gaji Pegawai
+		</div>
+		<div class="card-body">
+			<form class="form-inline">
+				<div class="form-group mb-2">
+					<label for="staticEmail2">Bulan</label>
+					<select class="form-control ml-3" name="bulan">
+						<option value=""> Pilih Bulan </option>
+						<option value="01">Januari</option>
+						<option value="02">Februari</option>
+						<option value="03">Maret</option>
+						<option value="04">April</option>
+						<option value="05">Mei</option>
+						<option value="06">Juni</option>
+						<option value="07">Juli</option>
+						<option value="08">Agustus</option>
+						<option value="09">September</option>
+						<option value="10">Oktober</option>
+						<option value="11">November</option>
+						<option value="12">Desember</option>
+					</select>
+				</div>
+				<div class="form-group mb-2 ml-5">
+					<label for="staticEmail2">Tahun</label>
+					<select class="form-control ml-3" name="tahun">
+						<option value=""> Pilih Tahun </option>
+						<?php $tahun = date('Y');
+						for ($i = 2020; $i < $tahun + 5; $i++) { ?>
+							<option value="<?php echo $i ?>"><?php echo $i ?></option>
+						<?php } ?>
+					</select>
+				</div>
 
-	$jml_data = count($gaji);
-	if($jml_data > 0 ) { ?>
+				<?php
+				if ((isset($_GET['bulan']) && $_GET['bulan'] != '') && (isset($_GET['tahun']) && $_GET['tahun'] != '')) {
+					$bulan = $_GET['bulan'];
+					$tahun = $_GET['tahun'];
+					$bulantahun = $bulan . $tahun;
+				} else {
+					$bulan = date('m');
+					$tahun = date('Y');
+					$bulantahun = $bulan . $tahun;
+				}
+				?>
 
-		<div class="container-fluid">
-		  <div class="card shadow mb-4">
-		   <div class="card-body">
-		     <div class="table-responsive">
-		       <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-		         <thead class="thead-dark">
-		           <tr>
-				        <th class="text-center" >No</th>
-						<th class="text-center" >NIK</th>
-						<th class="text-center" >Nama Pegawai</th>
-						<!-- <th class="text-center" >Jenis Kelamin</th> -->
-						<th class="text-center" >Jabatan</th>
-						<th class="text-center" >Hadir</th>
-						<th class="text-center" >Gaji</th>
-						<th class="text-center" >Tj. Transport</th>
-						<th class="text-center" >Uang Makan</th>
-						<th class="text-center" >Potongan [<i>Telat</i>]</th>
-						<th class="text-center" >Tambahan [<i>Lembur</i>]</th>
-						<th class="text-center" >Total Gaji</th>
-		           </tr>
-		           <!-- <tr> 
+				<button type="submit" class="btn btn-primary mb-2 ml-auto"><i class="fas fa-eye"></i> Tampilkan Data</button>
+
+				<?php if (count($gaji) > 0) { ?>
+					<a href="<?php echo base_url('admin/data_penggajian/cetak_gaji?bulan=' . $bulan), '&tahun=' . $tahun ?>" class="btn btn-success mb-2 ml-3"><i class="fas fa-print"></i> Cetak Daftar Gaji</a>
+				<?php } else { ?>
+					<button type="button" class="btn btn-success mb-2 ml-3" data-toggle="modal" data-target="#exampleModal">
+						<i class="fas fa-print"></i> Cetak Daftar Gaji</button>
+				<?php } ?>
+
+			</form>
+		</div>
+	</div>
+</div>
+
+<?php
+if ((isset($_GET['bulan']) && $_GET['bulan'] != '') && (isset($_GET['tahun']) && $_GET['tahun'] != '')) {
+	$bulan = $_GET['bulan'];
+	$tahun = $_GET['tahun'];
+	$bulantahun = $bulan . $tahun;
+} else {
+	$bulan = date('m');
+	$tahun = date('Y');
+	$bulantahun = $bulan . $tahun;
+}
+?>
+
+<div class="alert alert-info">
+	Menampilkan Data Gaji Pegawai Bulan: <span class="font-weight-bold"><?php echo $bulan ?></span> Tahun: <span class="font-weight-bold"><?php echo $tahun ?></span>
+</div>
+
+<?php
+
+$jml_data = count($gaji);
+if ($jml_data > 0) { ?>
+
+	<div class="container-fluid">
+		<div class="card shadow mb-4">
+			<div class="card-body">
+				<div class="table-responsive">
+					<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+						<thead class="thead-dark">
+							<tr>
+								<th class="text-center">No</th>
+								<th class="text-center">NIK</th>
+								<th class="text-center">Nama Pegawai</th>
+								<!-- <th class="text-center" >Jenis Kelamin</th> -->
+								<th class="text-center">Jabatan</th>
+								<th class="text-center">Hadir</th>
+								<th class="text-center">Gaji</th>
+								<th class="text-center">Tj. Transport</th>
+								<th class="text-center">Uang Makan</th>
+								<th class="text-center">Potongan [<i>Telat</i>]</th>
+								<th class="text-center">Tambahan [<i>Lembur</i>]</th>
+								<th class="text-center">Total Gaji</th>
+							</tr>
+							<!-- <tr> 
 						<th class="text-center" >[<i>Alpha</i>]</th>
 						<th class="text-center" >[<i>Telat</i>]</th> 
 		           </tr> -->
-		         </thead>
-		         <tbody>
-		          
-					<?php 
-					$no=1; foreach($gaji as $g) :
-						// var_dump($)
-					$total_potongan=0;
-					$total_potonganTelat=0;
-					$total_tambahan=0;
-						if($g->telat){
-							$total_potonganTelat  = $g->telat * $paramTelat->jml_potongan;
-						}
+						</thead>
+						<tbody>
 
-						if($g->alpha>0){
-							$total_potongan  = $g->alpha * $potongan->jml_potongan;
-						}
-						if($g->lembur>0){
-							$total_tambahan  = $g->lembur * $paramLembur->jml_potongan;
-						 }
-						
-$jumlah_kehadiran = $g->hadir;
+							<?php
+							$no = 1;
+							foreach ($gaji as $g) :
+								// var_dump($)
+								$total_potongan = 0;
+								$total_potonganTelat = 0;
+								$total_tambahan = 0;
+								if ($g->telat) {
+									$total_potonganTelat  = $g->telat * $paramTelat->jml_potongan;
+								}
 
- $tgl = $countTanggal - 4;
+								if ($g->alpha > 0) {
+									$total_potongan  = $g->alpha * $potongan->jml_potongan;
+								}
+								if ($g->lembur > 0) {
+									$total_tambahan  = $g->lembur * $paramLembur->jml_potongan;
+								}
 
- $persentase_kehadiran = ($jumlah_kehadiran / $tgl) * 100;
-$persentase_kehadiran_bulat = round($persentase_kehadiran);
-$gajiPoko = $g->gaji_pokok * ($persentase_kehadiran / 100);
-$uangMakan = $g->uang_makan * ($persentase_kehadiran / 100);
-$transport = $g->tj_transport * ($persentase_kehadiran / 100);
-// echo "Total Gaji Berdasarkan Persentase Kehadiran: Rp " . number_format($gajiPoko, 2, ',', '.') . "\n";
-					?>
-					<tr>
-						<td class="text-center"><?php echo $no++ ?></td>
-						<td class="text-center"><?php echo $g->nik ?></td>
-						<td class="text-center"><?php echo $g->nama_pegawai ?></td>
-						<td class="text-center" title="Gaji Pokok: Rp <?= number_format($g->gaji_pokok, 2, ',', '.') ?>&#10;Transport: Rp <?= number_format($g->tj_transport, 2, ',', '.') ?>&#10;Uang Makan: Rp <?= number_format($g->uang_makan, 2, ',', '.') ?>"><?php echo $g->nama_jabatan ?></td>
+								$jumlah_kehadiran = $g->hadir;
 
-						<td class="text-center" title="[Persentase Kehadiran=(Kehadiran/Jumlah Hari dalam Bulan)*100% ]"><?=$g->hadir?>
-						<br>
-						<b>[<?php echo $persentase_kehadiran_bulat ?>%  ]</b>   </td>
-						<!-- <td class="text-center">15x31hari - 4hari (libur)=100%</td> -->
-						<td class="text-right" title="Gaji pokok berdasarkan persentase kehadiran [gaji pokok * persentase khadiran) ]"><span class="">
- 							Rp. <br>
-							<b> <?php echo number_format($gajiPoko,0,',','.') ?></b> 
-							</b>
-				</td>
-						<td class="text-right">Rp. <br><b><?php echo number_format($transport,0,',','.') ?></b></td>
-						<td class="text-right">Rp. <br><b><?php echo number_format($uangMakan,0,',','.') ?></b></td>
-						<!-- <td class="text-center"><i><?=$g->alpha?>x</i> <br>Rp. <?php echo number_format($total_potongan ,0, ',','.') ?></td> -->
-						<td class="text-center"><i><?=$g->telat?> Jam</i> <br>Rp. <?php echo number_format($total_potonganTelat ,0, ',','.') ?></td>
-						<td class="text-center"><i><?=$g->lembur?> jam</i> <br>Rp. <?php echo number_format($total_tambahan ,0, ',','.') ?></td>
-						<td class="text-center">Rp. <?php echo number_format($gajiPoko + $transport + $uangMakan + $total_tambahan+$total_potonganTelat ,0,',','.') ?></td>
-					</tr> 
- 					<?php endforeach ;?>
-		         </tbody>
-		       </table>
-		     </div>
-		   </div>
-		  </div>
+								$tgl = $countTanggal - 4;
+
+								$persentase_kehadiran = ($jumlah_kehadiran / $tgl) * 100;
+								$persentase_kehadiran_bulat = round($persentase_kehadiran);
+								$gajiPoko = $g->gaji_pokok * ($persentase_kehadiran / 100);
+								$uangMakan = $g->uang_makan * ($persentase_kehadiran / 100);
+								$transport = $g->tj_transport * ($persentase_kehadiran / 100);
+								// echo "Total Gaji Berdasarkan Persentase Kehadiran: Rp " . number_format($gajiPoko, 2, ',', '.') . "\n";
+							?>
+								<tr>
+									<td class="text-center"><?php echo $no++ ?></td>
+									<td class="text-center"><?php echo $g->nik ?></td>
+									<td class="text-center"><?php echo $g->nama_pegawai ?></td>
+									<td class="text-center" title="Gaji Pokok: Rp <?= number_format($g->gaji_pokok, 2, ',', '.') ?>&#10;Transport: Rp <?= number_format($g->tj_transport, 2, ',', '.') ?>&#10;Uang Makan: Rp <?= number_format($g->uang_makan, 2, ',', '.') ?>"><?php echo $g->nama_jabatan ?></td>
+
+									<td class="text-center" title="[Persentase Kehadiran=(Kehadiran/Jumlah Hari dalam Bulan)*100% ]"><?= $g->hadir ?>
+										<br>
+										<b>[<?php echo $persentase_kehadiran_bulat ?>% ]</b>
+									</td>
+									<!-- <td class="text-center">15x31hari - 4hari (libur)=100%</td> -->
+									<td class="text-right" title="Gaji pokok berdasarkan persentase kehadiran [gaji pokok * persentase khadiran) ]"><span class="">
+											Rp. <br>
+											<b> <?php echo number_format($gajiPoko, 0, ',', '.') ?></b>
+											</b>
+									</td>
+									<td class="text-right">Rp. <br><b><?php echo number_format($transport, 0, ',', '.') ?></b></td>
+									<td class="text-right">Rp. <br><b><?php echo number_format($uangMakan, 0, ',', '.') ?></b></td>
+									<!-- <td class="text-center"><i><?= $g->alpha ?>x</i> <br>Rp. <?php echo number_format($total_potongan, 0, ',', '.') ?></td> -->
+									<td class="text-center"><i><?= $g->telat ?> Jam</i> <br>Rp. <?php echo number_format($total_potonganTelat, 0, ',', '.') ?></td>
+									<td class="text-center"><i><?= $g->lembur ?> jam</i> <br>Rp. <?php echo number_format($total_tambahan, 0, ',', '.') ?></td>
+									<td class="text-center">Rp. <?php echo number_format($gajiPoko + $transport + $uangMakan + $total_tambahan + $total_potonganTelat, 0, ',', '.') ?></td>
+								</tr>
+							<?php endforeach; ?>
+						</tbody>
+					</table>
+				</div>
+			</div>
 		</div>
-		<?php }else { ?>
+	</div>
+<?php } else { ?>
 	<span class="badge badge-danger"><i class="fas fa-info-circle"></i> Data absensi kosong, silakan input data kehadiran pada bulan dan tahun yang anda pilih</span>
 <?php } ?>
-	</div>
+</div>
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Informasi</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        Data gaji masih kosong, silahkan input absensi terlebih dahulu pada bulan dan tahun yang Anda pilih.
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Informasi</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				Data gaji masih kosong, silahkan input absensi terlebih dahulu pada bulan dan tahun yang Anda pilih.
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
 </div>
