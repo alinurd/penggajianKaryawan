@@ -27,6 +27,18 @@
 	$potongan_gaji=$ps->alpha * $potongan;
 	$total_tambahan = $ps->lembur * $paramLembur->jml_potongan;
 	$potonagn_telat = $ps->telat * $paramTelat->jml_potongan;
+	
+$jumlah_kehadiran = $ps->hadir;
+
+$tgl = $countTanggal - 4;
+
+$persentase_kehadiran = ($jumlah_kehadiran / $tgl) * 100;
+$persentase_kehadiran_bulat = round($persentase_kehadiran);
+$gajiPoko = $ps->gaji_pokok * ($persentase_kehadiran / 100);
+$uangMakan = $ps->uang_makan * ($persentase_kehadiran / 100);
+$transport = $ps->tj_transport * ($persentase_kehadiran / 100);
+
+
 
 ?>
 
@@ -83,23 +95,24 @@
 		</tr>
 
 		<tr>
-			<td class="text-center" rowspan="2">4</td>
-			<td>Potongan Alpha [<?=$ps->alpha?>x]</td>
+			<td class="text-center" >4</td>
+			<td>jumlah kehadiran: <?=$jumlah_kehadiran?> [ persentas:  <?=$persentase_kehadiran_bulat?>% ]</td>
 			<td>Rp. <?php echo number_format($potongan_gaji,0,',','.') ?></td>
 		</tr>
 		<tr>
+		<td class="text-center" >5</td>
  			<td>Potongan Telat [<?= $ps->telat ?> jam]</td>
 			<td>Rp. <?php echo number_format($potonagn_telat,0,',','.') ?></td>
 		</tr>
 		<tr>
-			<td>5</td>
+			<td>6</td>
 			<td>Tambahan [<?= $ps->lembur ?> jam]</td>
 			<td>Rp. <?php echo number_format($total_tambahan,0,',','.') ?></td>
 		</tr>
 
 		<tr>
 			<th colspan="2" style="text-align: right;">Total Gaji : </th>
-			<th>Rp. <?php echo number_format($ps->gaji_pokok+$ps->tj_transport+$ps->uang_makan-$potongan_gaji+$total_tambahan+$potonagn_telat,0,',','.') ?></th>
+			<th>Rp. <?php echo number_format($gajiPoko + $transport + $uangMakan + $total_tambahan+$potonagn_telat ,0,',','.') ?></th>
 		</tr>
 	</table>
 
@@ -114,7 +127,7 @@
 			</td>
 
 			<td width="200px">
-				<p>Tegal, <?php echo date("d M Y")?> <br> Finance,</p>
+				<p>Jakarta, <?php echo date("d M Y")?> <br> Finance,</p>
 				<br>
 				<br>
 				<p>___________________</p>
