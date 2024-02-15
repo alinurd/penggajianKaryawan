@@ -87,11 +87,24 @@ class Data_Pegawai extends CI_Controller {
 				<span aria-hidden="true">&times;</span>
 				</button>
 				</div>');
-			redirect('admin/data_pegawai');
+			redirect('admin/data_pegawai/daftarfaceid/'.$nik);
 		}
 
 	}
 
+	public function daftarFaceId() 
+	{
+		$id = $this->uri->segment(4);
+		$data['pegawai'] = $this->db->query("SELECT * FROM data_pegawai WHERE nik= $id")->row();
+ 		$data['title'] = "Daftar Face Id ".$data['pegawai']->nama_pegawai;
+		$data['jabatan'] = $this->ModelPenggajian->get_data('data_jabatan')->result();
+		// var_dump($id);
+		// var_dump($data['pegawai']);
+		$this->load->view('template_admin/header', $data);
+		$this->load->view('template_admin/sidebar');
+		$this->load->view('admin/pegawai/daftarfaceid', $data);
+		$this->load->view('template_admin/footer');
+	}
 	public function update_data($id) 
 	{
 		$where = array('id_pegawai' => $id);
@@ -160,7 +173,7 @@ class Data_Pegawai extends CI_Controller {
 				<span aria-hidden="true">&times;</span>
 				</button>
 				</div>');
-			redirect('admin/data_pegawai');
+			redirect('admin/data_pegawai/data_pegawai/'.$nik);
 		}
 	}
 
@@ -177,12 +190,41 @@ class Data_Pegawai extends CI_Controller {
 		$where = array('id_pegawai' => $id);
 		$this->ModelPenggajian->delete_data($where, 'data_pegawai');
 		$this->session->set_flashdata('pesan','<div class="alert alert-danger alert-dismissible fade show" role="alert">
-				<strong>Data berhasil dihapus!</strong>
-				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-				</button>
-				</div>');
-			redirect('admin/data_pegawai');
+		<strong>Data berhasil dihapus!</strong>
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+		</button>
+		</div>');
+		redirect('admin/data_pegawai');
+	}
+	public function savefcaeid() {
+		
+		$image = $this->input->post('image');
+		$nik = $this->input->post('nik');
+
+		$image = str_replace('data:image/jpeg;base64,', '', $image);
+		$image = base64_decode($image);
+		$filename = $nik.'.jpg';  // Adjust the file extension if needed
+		$filepath = FCPATH . 'presensiDaftar/' . $filename;
+
+		// Make sure the directory exists, create it if not
+		if (!is_dir(FCPATH . 'presensiDaftar/')) {
+			mkdir(FCPATH . 'presensiDaftar/');
+		}
+
+		// Save the image to the specified path
+		if (file_put_contents($filepath, $image) !== false) {
+			$msg = "Face Id berhasil didaftarkan";
+			 $sts=true;
+			 // echo 'Image uploaded successfully.';
+			} else {
+			$msg = "Face Id gagal didaftarakan";
+			 $sts=true;
+			// echo 'Failed to upload the image.';
+		}
+
+		echo json_encode(array('success' => $sts, 'msg' => $msg));
+
 	}
 }
 ?>

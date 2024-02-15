@@ -145,6 +145,7 @@ class Presensi extends CI_Controller
 					];
 					$res = $this->ModelPresensi->update_data("presensi", $data, $whare);
 					$this->ModelPresensi->updateRekapAbsen($nik, 0); 
+				$sts = true;
 				$msg = "absensi berhasil";
 
 				} 
@@ -185,7 +186,8 @@ class Presensi extends CI_Controller
 				$msg = "absensi berhasil";
 			}
 		} else {
-			$msg = "absensi gagal foto tidak mirip dengan yang di daftarkan. nilai kemiripan: " . round($ssi, 5);
+			// $msg = "absensi gagal, foto tidak mirip dengan yang di daftarkan. nilai kemiripan: " . round($ssi, 5);
+			$msg = "absensi gagal, FaceId tidak Terdaftar ";
 			 $sts=false;
 		}
 

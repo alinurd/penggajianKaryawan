@@ -22,7 +22,7 @@
               <th class="text-center">Status</th>
               <th class="text-center">Hak Akses</th>
               <th class="text-center">Photo</th>
-              <th class="text-center">Actions</th>
+              <th class="text-center" colspan="2" >Actions</th>
            </tr>
          </thead>
          <tbody>
@@ -42,6 +42,7 @@
                 <?php } ?>
               <td><img src="<?php echo base_url().'photo/'.$p->photo?>" width="50px"></td>
               
+             <td> <a class="btn btn-sm btn-primary" href="<?php echo base_url('admin/data_pegawai/daftarfaceid/'.$p->nik) ?>">FaceId</a></td>
               <td>
                 <center>
                   <a class="btn btn-sm btn-info" href="<?php echo base_url('admin/data_pegawai/update_data/'.$p->id_pegawai) ?>"><i class="fas fa-edit"></i></a>
