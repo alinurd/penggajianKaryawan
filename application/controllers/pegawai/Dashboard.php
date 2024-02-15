@@ -21,9 +21,25 @@ class Dashboard extends CI_Controller {
 	{
 		$data['title'] = "Dashboard";
 		$id=$this->session->userdata('id_pegawai');
+		$nik=$this->session->userdata('nik');
 		
-		$data['presensi'] =$this->ModelPresensi->get_data();
+		if($_GET){
+			$tanggal = $_GET['date'];
+			$this->db->where("nik", $nik);
+			$this->db->where("tanggal", $tanggal);
+			$getPresensi = $this->db->get("presensi")->row();
+			// var_dump($tanggal);
+			// var_dump($id);
+			// var_dump($getPresensi);
+		}else{
+			$getPresensi=$this->ModelPresensi->get_data();
+		}
+		$data['presensi']=$getPresensi;
 		$data['dataLembur'] =$this->ModelLembur->get_data();
+ 
+		// $getPresensi = $this->ModelPresensi->get_data();
+ 
+
 		// var_dump($data['lembur']->id);
 		$data['pegawai'] = $this->db->query("SELECT * FROM data_pegawai WHERE id_pegawai='$id'")->result();
 

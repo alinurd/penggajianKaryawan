@@ -52,7 +52,10 @@ th {
                 <br>
 
                 <form id="register">
-                    <div id="my_camera"></div>
+                    <div id="my_camera"></div><br>
+                    <input type="date" name="date" id="date">
+                    <br>
+                    <br>
                     <br>
                     <button type="submit" class="btn btn-primary">Absen Sekarang</button>
                     <a class="btn btn-danger" href="<?php echo base_url('pegawai/dashboard') ?>">
@@ -85,9 +88,14 @@ th {
 	<script type="text/javascript">
 		 $(document).ready(function() {
     $('#register').on('submit', function(event) {
-        event.preventDefault();
+        var tanggal = $("#date").val();
+         event.preventDefault();
+         if(!tanggal){
+alert("tanggal tidak boleh kosong")
+return false
+         }
         var image = '';
-        Webcam.snap(function(data_uri) {
+         Webcam.snap(function(data_uri) {
             image = data_uri;
 
             // AJAX request
@@ -96,21 +104,29 @@ th {
                 type: 'POST',
                 dataType: 'json',
                 data: {
-                    image: image
-                    // Include other data properties if needed, e.g., property_name: property_value
-                },
-                success: function(response) {
-        
-                },
-                error: function(xhr, status, error) {
-					alert('Insert data sukses');
+                    image: image,
+                    tanggal: tanggal,
+                 },
+                 success: function(response) {
+                    console.log(response);
+// console.log(response.success); // Memeriksa respons secara keseluruhan dan properti success
+        if (response.success) { // Perhatikan pembandingan dengan false, bukan dengan string "false"
+            alert(response.msg);
+        }else{
+            alert(response.msg);
+        }
+        window.location.href = '<?= site_url("pegawai/dashboard") ?>';
+    },
+                     error: function(xhr, status, error) {
+					alert(error);
                     window.location.href = '<?= site_url("pegawai/dashboard") ?>';
                 }
             });
         });
     });
 });
-document.addEventListener("DOMContentLoaded", function () {
+
+ document.addEventListener("DOMContentLoaded", function () {
     createCalendar();
     updateTime();
     setInterval(updateTime, 1000); // Update waktu setiap detik
