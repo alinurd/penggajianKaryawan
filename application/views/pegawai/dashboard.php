@@ -145,15 +145,18 @@ if ($presensi) {
 			</div>
 			<div class="card-body hide" <?= $absenHide ?> >
 				<center>
+					
+
 					<a id="inputId" class="btn btn-primary  <?= $absenDis ?>" href="<?php echo base_url('pegawai/presensi') ?>">
 						<i class="fas fa-fw fa-tachometer-alt"></i>
 						<span><?= $absesnTxt ?></span></a>
 					<a class="btn btn-info <?= $lembur ?>" href="<?php echo base_url('pegawai/lembur') ?>">
 						<i class="fas fa-fw fa-tachometer-alt"></i>
 						<span><?= $lemburTxt ?></span></a>
-						
-						 
-				</center>
+						<br><br><br>
+						<input type="date" name="date" id="date" value="<?=$date?$date:""?>"><br> <br>
+						<button class="btn btn-warning" id="lihat">lihat berdasrkan tanggal</button>
+ 				</center>
 				<br><br>
 				<div class="row">
 					<div>
@@ -186,8 +189,20 @@ if ($presensi) {
 	</div>
 	<!-- /.container-fluid -->
 
- 
-	<script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.js"></script>
+	<script language="JavaScript">
+		    $('#lihat').on('click', function(event) {
+			var date= $("#date").val();
+			if(!date){
+				alert("tanggal tidka boleh kosong")
+			}else{
+				window.location.href = '<?= site_url("pegawai/dashboard?date=") ?>' + date;
+
+			}
+ 			});
 		// JavaScript untuk menangani penonaktifan dinamis berdasarkan waktu server
 		window.onload = function() {
 			// Mendapatkan waktu saat ini pada format yang sesuai ("HH:mm")

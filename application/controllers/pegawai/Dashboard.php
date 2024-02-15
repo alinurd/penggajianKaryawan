@@ -33,7 +33,10 @@ class Dashboard extends CI_Controller {
 			// var_dump($getPresensi);
 		}else{
 			$getPresensi=$this->ModelPresensi->get_data();
+			$tanggal = date("Y-m-d");
+
 		}
+		$data['date']=$tanggal;
 		$data['presensi']=$getPresensi;
 		$data['dataLembur'] =$this->ModelLembur->get_data();
  
