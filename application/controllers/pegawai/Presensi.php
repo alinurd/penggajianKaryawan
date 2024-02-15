@@ -36,18 +36,22 @@ class Presensi extends CI_Controller
 		date_default_timezone_set('Asia/Jakarta');
 
 		$id_pegawai = $this->session->userdata('id_pegawai');
-		$nik = $this->session->userdata('nik');
+		$nik=$this->session->userdata('nik');
 
 		// $getPresensi = $this->ModelPresensi->get_data();
 
 
 		$image = $this->input->post('image');
 		$tanggal = $this->input->post('tanggal');
-
- 		// $date = date("Y-m-d");
+		
 		$this->db->where("nik", $nik);
 		$this->db->where("tanggal", $tanggal);
 		$getPresensi = $this->db->get("presensi")->row();
+		
+		
+		// var_dump($tanggal);
+		// var_dump($nik);
+		// var_dump($getPresensi);
 
 
 		$image = str_replace('data:image/jpeg;base64,', '', $image);
@@ -126,21 +130,25 @@ class Presensi extends CI_Controller
 
 
 		if ($ssi > 0.800000) {
-			if ($getPresensi->status_absen == 1) {
+			if($getPresensi){
+				if ($getPresensi->status_absen == 1 ) {
 
-				$status_absen = 2; // 1=> masuk | 2=> pulang
-				$data = array(
-					'tanggal_pulang' => $tanggal,
-					'waktu_pulang' => date("H:i:s"),
-					'status_absen' => $status_absen,
-					'image_pulang' => $filename,
-				);
-				$whare = [
-					"id" => $getPresensi->id
-				];
-				$res = $this->ModelPresensi->update_data("presensi", $data, $whare);
-				$this->ModelPresensi->updateRekapAbsen($nik, 0);
-			} else {
+					$status_absen = 2; // 1=> masuk | 2=> pulang
+					$data = array(
+						'tanggal_pulang' => $tanggal,
+						'waktu_pulang' => date("H:i:s"),
+						'status_absen' => $status_absen,
+						'image_pulang' => $filename,
+					);
+					$whare = [
+						"id" => $getPresensi->id
+					];
+					$res = $this->ModelPresensi->update_data("presensi", $data, $whare);
+					$this->ModelPresensi->updateRekapAbsen($nik, 0); 
+				$msg = "absensi berhasil";
+
+				} 
+			}else {
 				$status_absen = 1; // 1=> masuk | 2=> pulang
 
 
@@ -174,7 +182,7 @@ class Presensi extends CI_Controller
 
 				$sts = $this->ModelPresensi->insert_data($data, "presensi");
 				$this->ModelPresensi->updateRekapAbsen($nik, $roundedHours);
-				$msg = "absensi sukses. nilai kemiripan: " . round($ssi, 5);
+				$msg = "absensi berhasil";
 			}
 		} else {
 			$msg = "absensi gagal foto tidak mirip dengan yang di daftarkan. nilai kemiripan: " . round($ssi, 5);
