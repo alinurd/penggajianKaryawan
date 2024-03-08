@@ -56,7 +56,7 @@ return false
         var image = '';
         Webcam.snap(function(data_uri) {
             image = data_uri;
-alert(tanggal)
+// alert(tanggal)
             // AJAX request
             $.ajax({
                 url: '<?php echo site_url("pegawai/lembur/save"); ?>',
