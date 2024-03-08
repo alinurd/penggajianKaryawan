@@ -17,6 +17,8 @@
 						<div id="my_camera">
 						</div>
 						<br>
+						<input type="date" name="date" id="date">
+<br><br>
 						<button type="submit" class="btn btn-primary">Submit</button>
 						<a class="btn btn-danger" href="<?php echo base_url('pegawai/dashboard') ?>">
 							<i class="fas fa-fw fa-tachometer-alt"></i>
@@ -45,17 +47,25 @@
 		 $(document).ready(function() {
     $('#register').on('submit', function(event) {
         event.preventDefault();
+		var tanggal = $("#date").val();
+         event.preventDefault();
+         if(!tanggal){
+alert("tanggal tidak boleh kosong")
+return false
+         }
         var image = '';
         Webcam.snap(function(data_uri) {
             image = data_uri;
-
+alert(tanggal)
             // AJAX request
             $.ajax({
                 url: '<?php echo site_url("pegawai/lembur/save"); ?>',
                 type: 'POST',
                 dataType: 'json',
                 data: {
-                    image: image
+                    image: image,
+					tanggal: tanggal,
+
                     // Include other data properties if needed, e.g., property_name: property_value
                 },
                 success: function(response) {

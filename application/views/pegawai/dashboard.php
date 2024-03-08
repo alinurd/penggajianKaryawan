@@ -26,31 +26,36 @@ date_default_timezone_set('Asia/Jakarta');
 // Get current server time
 $currentServerTime = date("H:i");
 
-// Set waktu buka absen
+// Set waktu buka absen 
 $bukaAbsen = "08:00";
 
-// Ubah format waktu buka absen menjadi format yang sesuai untuk pembandingan
-$bukaAbsenTimestamp = strtotime($bukaAbsen);
+$setOpnPulang = "20.00";
 
-// Ubah waktu server saat ini menjadi format yang sama
-$currentServerTimeTimestamp = strtotime($currentServerTime);
 
+
+ $bukaAbsenTimestamp = strtotime($bukaAbsen);
+ $currentServerTimeTimestamp = strtotime($currentServerTime);
 $absenHide = " ";
-// Bandingkan waktu saat ini dengan waktu buka absen
-$absenHideOk = "hidden";
+ $absenHideOk = "hidden";
 if ($currentServerTimeTimestamp < $bukaAbsenTimestamp) {
     $absenHide = "hidden";
     $absenHideOk = "";
  } 
-
-
  
+  $bukaAbsenTimestampPlg = strtotime($setOpnPulang);
+ $currentServerTimeTimestampPlg = strtotime($currentServerTime);
+ $absenPulang = "";
+
 if ($presensi) {
 	$pt = $presensi->tanggal;
 	$pw = $presensi->waktu;
 	$ptp = $presensi->tanggal_pulang;
 	$ptw = $presensi->waktu_pulang;
 	if ($presensi->status_absen == 1) {
+		if ($currentServerTimeTimestampPlg < $bukaAbsenTimestampPlg) {
+			$absenPulang = "disabled";
+			$absenHideOk = "disabled";
+		}
 		$lembur = "disabled";
 		$sts = "Masuk";
 		$absesnTxt = "Absen Pulang";
@@ -85,7 +90,7 @@ if ($presensi) {
 	$sts = "Belum Absen";
 	$absesnTxt = "Absen sekarang";
 }
-
+var_dump($absenPulang)
 ?>
 
 <div class="container-fluid">
@@ -147,7 +152,7 @@ if ($presensi) {
 				<center>
 					
 
-					<a id="inputId" class="btn btn-primary  <?= $absenDis ?>" href="<?php echo base_url('pegawai/presensi') ?>">
+					<a id="inputId" class="btn btn-primary  <?= $absenDis ?> <?= $absenPulang ?>" href="<?php echo base_url('pegawai/presensi') ?>">
 						<i class="fas fa-fw fa-tachometer-alt"></i>
 						<span><?= $absesnTxt ?></span></a>
 					<a class="btn btn-info <?= $lembur ?>" href="<?php echo base_url('pegawai/lembur') ?>">

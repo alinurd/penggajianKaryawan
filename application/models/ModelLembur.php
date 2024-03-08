@@ -16,6 +16,18 @@ class ModelLembur extends CI_model
 			return FALSE;
 		}
 	}
+	public function get_dataByTgl($date)
+	{
+		$id = $this->session->userdata('nik');
+ 		$this->db->where("nik", $id);
+		$this->db->where("tanggal", $date);
+		$result = $this->db->get("lembur");
+		if ($result->num_rows() > 0) {
+			return $result->row();
+		} else {
+			return FALSE;
+		}
+	}
 
 	public function insert_data($data, $table)
 	{

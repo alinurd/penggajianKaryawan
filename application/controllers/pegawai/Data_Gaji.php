@@ -68,6 +68,7 @@ class Data_Gaji extends CI_Controller {
 
 
 		 	WHERE data_kehadiran.nik = '$nik'
+		 	AND data_kehadiran.bulan = '$bulantahun'
 		 	ORDER BY data_kehadiran.bulan DESC")->result();
 
 		$this->load->view('template_pegawai/header',$data);

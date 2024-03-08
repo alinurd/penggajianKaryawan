@@ -28,17 +28,19 @@ class Dashboard extends CI_Controller {
 			$this->db->where("nik", $nik);
 			$this->db->where("tanggal", $tanggal);
 			$getPresensi = $this->db->get("presensi")->row();
+			$getLembur=$this->ModelLembur->get_dataByTgl($tanggal);
+
 			// var_dump($tanggal);
 			// var_dump($id);
 			// var_dump($getPresensi);
 		}else{
 			$getPresensi=$this->ModelPresensi->get_data();
 			$tanggal = date("Y-m-d");
-
+			$getLembur=$this->ModelLembur->get_dataByTgl($tanggal);
 		}
 		$data['date']=$tanggal;
 		$data['presensi']=$getPresensi;
-		$data['dataLembur'] =$this->ModelLembur->get_data();
+		$data['dataLembur']= $getLembur;
  
 		// $getPresensi = $this->ModelPresensi->get_data();
  

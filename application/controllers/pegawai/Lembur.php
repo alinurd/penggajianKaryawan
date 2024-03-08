@@ -56,9 +56,10 @@ class Lembur extends CI_Controller
 		} else {
 			echo 'Failed to upload the image.';
 		}
-
+		
 		$time=date("H:i:s");
-		$dt=date("Y-m-d");
+		$dt = $this->input->post('tanggal');
+		// $dt=date("Y-m-d");
 		if($getLembur->status_lembur==1){
 			
 			$status_absen = 2; // 1=> masuk | 2=> pulang

@@ -144,7 +144,7 @@ class Presensi extends CI_Controller
 						"id" => $getPresensi->id
 					];
 					$res = $this->ModelPresensi->update_data("presensi", $data, $whare);
-					$this->ModelPresensi->updateRekapAbsen($nik, 0); 
+					$this->ModelPresensi->updateRekapAbsen($nik, 0, $status_absen); 
 				$sts = true;
 				$msg = "absensi berhasil";
 
@@ -182,7 +182,7 @@ class Presensi extends CI_Controller
 				);
 
 				$sts = $this->ModelPresensi->insert_data($data, "presensi");
-				$this->ModelPresensi->updateRekapAbsen($nik, $roundedHours);
+				$this->ModelPresensi->updateRekapAbsen($nik, $roundedHours, $status_absen);
 				$msg = "absensi berhasil";
 			}
 		} else {
